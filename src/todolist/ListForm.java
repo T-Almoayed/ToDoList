@@ -173,7 +173,7 @@ public class ListForm extends javax.swing.JFrame {
             PrintWriter w = new PrintWriter(table.getToolTipText() + ".txt");
             w.println(table.getToolTipText());
             w.close();
-            JOptionPane.showMessageDialog(null, "Task saved..");
+            JOptionPane.showMessageDialog(null, "Task saved...");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ListForm.class.getName()).log(Level.SEVERE, null, ex);
         }
