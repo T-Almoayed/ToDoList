@@ -15,7 +15,11 @@ public class ToDoList {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       new ListForm().setVisible(true);
+        // TODO code application logic here
+        listFrame f = new listFrame();
+        f.setVisible(true);
+        f.setLocationRelativeTo(null);
+        
     }
     
 }
