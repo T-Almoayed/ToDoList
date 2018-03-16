@@ -7,7 +7,13 @@ package todolist;
 
 import java.awt.HeadlessException;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
@@ -22,8 +28,7 @@ import javax.swing.JOptionPane;
  */
 public class listFrame extends javax.swing.JFrame {
 
-    private int DISPOSE_ON_COLSE;
-
+    //private int DISPOSE_ON_COLSE;
     /**
      * Creates new form listFrame
      */
@@ -49,7 +54,6 @@ public class listFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         statusY_N = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        txtDes = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtTitle = new javax.swing.JTextField();
         dateChooser = new com.toedter.calendar.JDateChooser();
@@ -60,6 +64,8 @@ public class listFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
+        btnShow = new javax.swing.JButton();
+        txtDes = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,12 +122,6 @@ public class listFrame extends javax.swing.JFrame {
 
         jLabel5.setText("Description:");
 
-        txtDes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDesActionPerformed(evt);
-            }
-        });
-
         jLabel2.setText("Task Title:");
 
         jLabel3.setText("Due date:");
@@ -145,48 +145,63 @@ public class listFrame extends javax.swing.JFrame {
 
         jLabel7.setText("ID:");
 
+        btnShow.setText("Show");
+        btnShow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(291, 291, 291)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(dateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtTitle)
-                    .addComponent(statusY_N, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtDes, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                    .addComponent(txtId))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnQuit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(29, 29, 29))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel7))
+                                .addGap(23, 23, 23))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                            .addComponent(txtTitle)
+                            .addComponent(statusY_N, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtId)
+                            .addComponent(txtDes))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnShow, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnQuit, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(291, 291, 291)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,20 +209,7 @@ public class listFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnQuit)
-                            .addComponent(btnRemove)
-                            .addComponent(btnUpdate)
-                            .addComponent(btnAdd)
-                            .addComponent(jButton1)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -224,11 +226,26 @@ public class listFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(statusY_N, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(22, 22, 22)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtDes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))))
-                .addGap(41, 41, 41))
+                            .addComponent(jLabel5)
+                            .addComponent(txtDes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(41, 41, 41))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAdd)
+                            .addComponent(jButton1)
+                            .addComponent(btnShow)
+                            .addComponent(btnUpdate)
+                            .addComponent(btnRemove)
+                            .addComponent(btnQuit))))
+                .addGap(71, 71, 71))
         );
 
         pack();
@@ -256,11 +273,13 @@ public class listFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         setTable();
+        Date dNow = dateChooser.getDate();
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
         //SimpleDateFormat D = new SimpleDateFormat("yyyy-mm-dd");
         //String date= D.format(jDateChooser1.getDate());
         //java.util.Date dt1 = new java.util.Date();
         //java.text.SimpleDateFormat dt2 = new java.text.SimpleDateFormat("dd/MM/yyyy"); dt2.format(dt1) 
-        model.addRow(new Object[]{txtId.getText(), txtTitle.getText(), dateChooser.getDate(), statusY_N.getSelectedItem(), txtDes.getText()});
+        model.addRow(new Object[]{txtId.getText(), txtTitle.getText(), ft.format(dNow), statusY_N.getSelectedItem(), txtDes.getText()});
 
         //clearText();
 
@@ -277,11 +296,6 @@ public class listFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_btnQuitActionPerformed
-
-    private void txtDesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDesActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtDesActionPerformed
     int currentRow;
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
@@ -319,7 +333,35 @@ public class listFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        String filePath = "/Users/taha/Documents/SDA3/ToDoList/ToDoList.txt";
+        File file = new File(filePath);
+
         try {
+
+            //FileWriter fw=new FileWriter(file);
+            //BufferedWriter bw=new BufferedWriter(fw);
+            PrintWriter w = new PrintWriter("ToDoList.txt");
+            //w.print(txtId.getText() + "    ");
+            String s = "";
+            for (int i = 0; i < tblTask.getRowCount(); i++) {
+                for (int j = 0; j < tblTask.getColumnCount(); j++) {
+                    s += tblTask.getValueAt(i, j).toString() + "    ";
+                    //w.print(s);
+                    //w.print("");
+                    //bw.write(tblTask.getValueAt(i,j).toString()+" ");
+
+                }
+                s += " \n";
+                //bw.newLine();
+
+            }
+            w.print(s);
+            w.close();
+            //fw.close();
+            //bw.close();
+
+            /*try {
             PrintWriter w = new PrintWriter(txtTitle.getText() + ".txt");
             w.print(txtId.getText() + "    ");
             w.print(txtTitle.getText() + "    ");
@@ -328,12 +370,45 @@ public class listFrame extends javax.swing.JFrame {
             w.print(txtDes.getText());
             w.close();
             JOptionPane.showMessageDialog(null, "Saved task");
-
-        } catch (FileNotFoundException ex) {
+            
+            } catch (FileNotFoundException ex) {
+            Logger.getLogger(listFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            }
+             */
+            /**
+             * @param args the command line arguments
+             */
+        } catch (IOException ex) {
             Logger.getLogger(listFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowActionPerformed
+        // TODO add your handling code here:
+        String filePath = "/Users/taha/Documents/SDA3/ToDoList/ToDoList.txt";
+        File file = new File(filePath);
+        
+        try {
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+
+            DefaultTableModel model = (DefaultTableModel)tblTask.getModel();
+            Object[] lines = br.lines().toArray();
+            
+
+            for (int i = 0; i < lines.length; i++) {
+                String[] row = lines[i].toString().split("    ");
+                model.addRow(row);
+            } 
+        }catch (FileNotFoundException ex) {
+            Logger.getLogger(listFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnShowActionPerformed
 
     /**
      * @param args the command line arguments
@@ -374,6 +449,7 @@ public class listFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnQuit;
     private javax.swing.JButton btnRemove;
+    private javax.swing.JButton btnShow;
     private javax.swing.JButton btnUpdate;
     private com.toedter.calendar.JDateChooser dateChooser;
     private javax.swing.JButton jButton1;
