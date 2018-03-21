@@ -133,6 +133,11 @@ public class listFrame extends javax.swing.JFrame {
 
         jTextField1.setToolTipText("");
         jTextField1.setDoubleBuffered(true);
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jButton1.setForeground(new java.awt.Color(51, 153, 0));
@@ -259,12 +264,16 @@ public class listFrame extends javax.swing.JFrame {
 
     }
 
+    /**
+     * 
+     */
     private void clearText() {
 
         txtTitle.setText("");
         dateChooser.setToolTipText("");
         statusY_N.setToolTipText("");
         txtDes.setText("");
+        // 
         txtTitle.requestFocus();
 
     }
@@ -281,7 +290,7 @@ public class listFrame extends javax.swing.JFrame {
         //java.text.SimpleDateFormat dt2 = new java.text.SimpleDateFormat("dd/MM/yyyy"); dt2.format(dt1) 
         model.addRow(new Object[]{txtId.getText(), txtTitle.getText(), ft.format(dNow), statusY_N.getSelectedItem(), txtDes.getText()});
 
-        //clearText();
+        clearText();
 
         /*  addTasks d = new addTasks();
         d.setVisible(true);
@@ -409,6 +418,10 @@ public class listFrame extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnShowActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
