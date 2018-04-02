@@ -16,7 +16,7 @@ public class ToDoList {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        listFrame f = new listFrame();
+        toDolistInterface f = new toDolistInterface();
         f.setVisible(true);
         f.setLocationRelativeTo(null);
         

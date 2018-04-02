@@ -21,18 +21,20 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author taha
  */
-public class listFrame extends javax.swing.JFrame {
+public class toDolistInterface extends javax.swing.JFrame {
 
     //private int DISPOSE_ON_COLSE;
     /**
      * Creates new form listFrame
      */
-    public listFrame() {
+    public toDolistInterface() {
         initComponents();
     }
 
@@ -46,30 +48,30 @@ public class listFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblTask = new javax.swing.JTable();
-        btnAdd = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
-        btnQuit = new javax.swing.JButton();
-        btnRemove = new javax.swing.JButton();
+        tableTask = new javax.swing.JTable();
+        buttonAdd = new javax.swing.JButton();
+        buttonUpdate = new javax.swing.JButton();
+        buttonQuit = new javax.swing.JButton();
+        buttonRemove = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        statusY_N = new javax.swing.JComboBox<>();
+        Status = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtTitle = new javax.swing.JTextField();
+        textFieldTitle = new javax.swing.JTextField();
         dateChooser = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        TextFieldFilter = new javax.swing.JTextField();
+        buttonSave = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        txtId = new javax.swing.JTextField();
-        btnShow = new javax.swing.JButton();
-        txtDes = new javax.swing.JTextField();
+        textFieldId = new javax.swing.JTextField();
+        buttonShow = new javax.swing.JButton();
+        textFieldDescription = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tblTask.setModel(new javax.swing.table.DefaultTableModel(
+        tableTask.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -77,34 +79,34 @@ public class listFrame extends javax.swing.JFrame {
                 "ID", "Titel Task", "Due Date", "Status", "Description"
             }
         ));
-        jScrollPane1.setViewportView(tblTask);
+        jScrollPane1.setViewportView(tableTask);
 
-        btnAdd.setText("Add");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+        buttonAdd.setText("Add");
+        buttonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
+                buttonAddActionPerformed(evt);
             }
         });
 
-        btnUpdate.setText("Update");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+        buttonUpdate.setText("Update");
+        buttonUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
+                buttonUpdateActionPerformed(evt);
             }
         });
 
-        btnQuit.setForeground(new java.awt.Color(255, 0, 51));
-        btnQuit.setText("Quit");
-        btnQuit.addActionListener(new java.awt.event.ActionListener() {
+        buttonQuit.setForeground(new java.awt.Color(255, 0, 51));
+        buttonQuit.setText("Quit");
+        buttonQuit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQuitActionPerformed(evt);
+                buttonQuitActionPerformed(evt);
             }
         });
 
-        btnRemove.setText("Remove");
-        btnRemove.addActionListener(new java.awt.event.ActionListener() {
+        buttonRemove.setText("Remove");
+        buttonRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRemoveActionPerformed(evt);
+                buttonRemoveActionPerformed(evt);
             }
         });
 
@@ -113,10 +115,10 @@ public class listFrame extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Welcome to ToDoly");
 
-        statusY_N.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Done", "Undone", "None" }));
-        statusY_N.addActionListener(new java.awt.event.ActionListener() {
+        Status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Done", "Undone", "None" }));
+        Status.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                statusY_NActionPerformed(evt);
+                StatusActionPerformed(evt);
             }
         });
 
@@ -131,29 +133,34 @@ public class listFrame extends javax.swing.JFrame {
         jLabel6.setText("Search:");
         jLabel6.setToolTipText("Search");
 
-        jTextField1.setToolTipText("");
-        jTextField1.setDoubleBuffered(true);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        TextFieldFilter.setToolTipText("");
+        TextFieldFilter.setDoubleBuffered(true);
+        TextFieldFilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                TextFieldFilterActionPerformed(evt);
+            }
+        });
+        TextFieldFilter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TextFieldFilterKeyReleased(evt);
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(51, 153, 0));
-        jButton1.setText("Save");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonSave.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        buttonSave.setForeground(new java.awt.Color(51, 153, 0));
+        buttonSave.setText("Save");
+        buttonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                buttonSaveActionPerformed(evt);
             }
         });
 
         jLabel7.setText("ID:");
 
-        btnShow.setText("Show");
-        btnShow.addActionListener(new java.awt.event.ActionListener() {
+        buttonShow.setText("Show");
+        buttonShow.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnShowActionPerformed(evt);
+                buttonShowActionPerformed(evt);
             }
         });
 
@@ -179,30 +186,30 @@ public class listFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(dateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                            .addComponent(txtTitle)
-                            .addComponent(statusY_N, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtId)
-                            .addComponent(txtDes))
+                            .addComponent(textFieldTitle)
+                            .addComponent(Status, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(textFieldId)
+                            .addComponent(textFieldDescription))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(TextFieldFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(buttonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnShow, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(buttonShow, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(buttonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(buttonRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnQuit, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(buttonQuit, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(291, 291, 291)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -217,12 +224,12 @@ public class listFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(textFieldTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(16, 16, 16)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -230,26 +237,26 @@ public class listFrame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(statusY_N, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(txtDes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(textFieldDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel6)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(TextFieldFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(41, 41, 41))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAdd)
-                            .addComponent(jButton1)
-                            .addComponent(btnShow)
-                            .addComponent(btnUpdate)
-                            .addComponent(btnRemove)
-                            .addComponent(btnQuit))))
+                            .addComponent(buttonAdd)
+                            .addComponent(buttonSave)
+                            .addComponent(buttonShow)
+                            .addComponent(buttonUpdate)
+                            .addComponent(buttonRemove)
+                            .addComponent(buttonQuit))))
                 .addGap(71, 71, 71))
         );
 
@@ -258,72 +265,74 @@ public class listFrame extends javax.swing.JFrame {
 
     DefaultTableModel model;
 
+    //This method enables us to use JTable like add, insert or delete rows and columns.
     private void setTable() {
 
-        model = (DefaultTableModel) tblTask.getModel();
+        model = (DefaultTableModel) tableTask.getModel();
 
     }
 
     /**
-     * 
+     *
      */
+    //This method enables us to clear all text filed after each process we do.
     private void clearText() {
-
-        txtTitle.setText("");
+        textFieldId.setText("");
+        textFieldTitle.setText("");
         dateChooser.setToolTipText("");
-        statusY_N.setToolTipText("");
-        txtDes.setText("");
-        // 
-        txtTitle.requestFocus();
+        Status.setToolTipText("None");
+        textFieldDescription.setText("");
+
+        textFieldId.requestFocus();//The cursor is placed in the first text feild automatically
 
     }
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+    // Sorter or Fillter Data.
+    /**
+     * @param query
+     */
+    private void fillter(String query) {
+        TableRowSorter<DefaultTableModel> sort = new TableRowSorter<>(model);
+        tableTask.setRowSorter(sort);
+        sort.setRowFilter(RowFilter.regexFilter(query));
+    }
 
+    // add Tasks from Fields to Jtable
+    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
         setTable();
         Date dNow = dateChooser.getDate();
-        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
-        //SimpleDateFormat D = new SimpleDateFormat("yyyy-mm-dd");
-        //String date= D.format(jDateChooser1.getDate());
-        //java.util.Date dt1 = new java.util.Date();
-        //java.text.SimpleDateFormat dt2 = new java.text.SimpleDateFormat("dd/MM/yyyy"); dt2.format(dt1) 
-        model.addRow(new Object[]{txtId.getText(), txtTitle.getText(), ft.format(dNow), statusY_N.getSelectedItem(), txtDes.getText()});
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+        model.addRow(new Object[]{textFieldId.getText(), textFieldTitle.getText(), date.format(dNow), Status.getSelectedItem(), textFieldDescription.getText()});
 
         clearText();
 
-        /*  addTasks d = new addTasks();
-        d.setVisible(true);
-        d.setLocationRelativeTo(null);
-        d.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        d.setDefaultCloseOperation(addTasks.DO_NOTHING_ON_CLOSE);
-         */
+    }//GEN-LAST:event_buttonAddActionPerformed
 
-    }//GEN-LAST:event_btnAddActionPerformed
-
-    private void btnQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitActionPerformed
-        // TODO add your handling code here:
+    // Exit form application ToDoList.
+    private void buttonQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonQuitActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_btnQuitActionPerformed
+    }//GEN-LAST:event_buttonQuitActionPerformed
+
+    //Update tasks
     int currentRow;
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
+    private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
         setTable();
-        currentRow = tblTask.getSelectedRow();
-        model.setValueAt(txtId.getText(), currentRow, 0);
-        model.setValueAt(txtTitle.getText(), currentRow, 1);
+        currentRow = tableTask.getSelectedRow();
+        model.setValueAt(textFieldId.getText(), currentRow, 0);
+        model.setValueAt(textFieldTitle.getText(), currentRow, 1);
         model.setValueAt(dateChooser.getDate(), currentRow, 2);
-        model.setValueAt(statusY_N.getSelectedItem(), currentRow, 3);
-        model.setValueAt(txtDes.getText(), currentRow, 4);
+        model.setValueAt(Status.getSelectedItem(), currentRow, 3);
+        model.setValueAt(textFieldDescription.getText(), currentRow, 4);
         clearText();
 
-    }//GEN-LAST:event_btnUpdateActionPerformed
+    }//GEN-LAST:event_buttonUpdateActionPerformed
 
-    private void statusY_NActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusY_NActionPerformed
+    private void StatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StatusActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_statusY_NActionPerformed
+    }//GEN-LAST:event_StatusActionPerformed
 
-    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+    // Delete tasks.
+    private void buttonRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRemoveActionPerformed
         // TODO add your handling code here:
 
         try {
@@ -331,97 +340,76 @@ public class listFrame extends javax.swing.JFrame {
             int Confirmation = JOptionPane.showConfirmDialog(null, "Do you really want to delete task?", "delete", JOptionPane.YES_NO_OPTION);
 
         } catch (HeadlessException ex) {
-            Logger.getLogger(listFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(toDolistInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
         setTable();
-        currentRow = tblTask.getSelectedRow();
+        currentRow = tableTask.getSelectedRow();
         model.removeRow(currentRow);
         clearText();
+    }//GEN-LAST:event_buttonRemoveActionPerformed
 
-
-    }//GEN-LAST:event_btnRemoveActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    // Save tasks from JTable to file ToDoList.txt.
+    private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
 
         String filePath = "/Users/taha/Documents/SDA3/ToDoList/ToDoList.txt";
         File file = new File(filePath);
 
         try {
-
-            //FileWriter fw=new FileWriter(file);
-            //BufferedWriter bw=new BufferedWriter(fw);
             PrintWriter w = new PrintWriter("ToDoList.txt");
-            //w.print(txtId.getText() + "    ");
             String s = "";
-            for (int i = 0; i < tblTask.getRowCount(); i++) {
-                for (int j = 0; j < tblTask.getColumnCount(); j++) {
-                    s += tblTask.getValueAt(i, j).toString() + "    ";
-                    //w.print(s);
-                    //w.print("");
-                    //bw.write(tblTask.getValueAt(i,j).toString()+" ");
-
+            for (int i = 0; i < tableTask.getRowCount(); i++) {
+                for (int j = 0; j < tableTask.getColumnCount(); j++) {
+                    s += tableTask.getValueAt(i, j).toString() + "    ";
                 }
                 s += " \n";
-                //bw.newLine();
 
             }
             w.print(s);
             w.close();
-            //fw.close();
-            //bw.close();
-
-            /*try {
-            PrintWriter w = new PrintWriter(txtTitle.getText() + ".txt");
-            w.print(txtId.getText() + "    ");
-            w.print(txtTitle.getText() + "    ");
-            w.print(dateChooser.getDate() + "    ");
-            w.print(statusY_N.getSelectedItem() + "    ");
-            w.print(txtDes.getText());
-            w.close();
             JOptionPane.showMessageDialog(null, "Saved task");
-            
-            } catch (FileNotFoundException ex) {
-            Logger.getLogger(listFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            }
-             */
+
             /**
              * @param args the command line arguments
              */
         } catch (IOException ex) {
-            Logger.getLogger(listFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(toDolistInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_buttonSaveActionPerformed
 
-    private void btnShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowActionPerformed
-        // TODO add your handling code here:
+    // import tasks from file ToDoList.txt to JTable.
+    private void buttonShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonShowActionPerformed
+
         String filePath = "/Users/taha/Documents/SDA3/ToDoList/ToDoList.txt";
         File file = new File(filePath);
-        
+
         try {
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
 
-            DefaultTableModel model = (DefaultTableModel)tblTask.getModel();
+            DefaultTableModel model = (DefaultTableModel) tableTask.getModel();
             Object[] lines = br.lines().toArray();
-            
 
             for (int i = 0; i < lines.length; i++) {
                 String[] row = lines[i].toString().split("    ");
                 model.addRow(row);
-            } 
-        }catch (FileNotFoundException ex) {
-            Logger.getLogger(listFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(toDolistInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }//GEN-LAST:event_btnShowActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_buttonShowActionPerformed
+
+    private void TextFieldFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldFilterActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_TextFieldFilterActionPerformed
+
+
+    private void TextFieldFilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextFieldFilterKeyReleased
+        String query = TextFieldFilter.getText().toLowerCase();
+        fillter(query);
+    }//GEN-LAST:event_TextFieldFilterKeyReleased
 
     /**
      * @param args the command line arguments
@@ -440,32 +428,35 @@ public class listFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(listFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(toDolistInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(listFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(toDolistInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(listFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(toDolistInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(listFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(toDolistInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new listFrame().setVisible(true);
+                new toDolistInterface().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnQuit;
-    private javax.swing.JButton btnRemove;
-    private javax.swing.JButton btnShow;
-    private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> Status;
+    private javax.swing.JTextField TextFieldFilter;
+    private javax.swing.JButton buttonAdd;
+    private javax.swing.JButton buttonQuit;
+    private javax.swing.JButton buttonRemove;
+    private javax.swing.JButton buttonSave;
+    private javax.swing.JButton buttonShow;
+    private javax.swing.JButton buttonUpdate;
     private com.toedter.calendar.JDateChooser dateChooser;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -474,11 +465,9 @@ public class listFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JComboBox<String> statusY_N;
-    private javax.swing.JTable tblTask;
-    private javax.swing.JTextField txtDes;
-    private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtTitle;
+    private javax.swing.JTable tableTask;
+    private javax.swing.JTextField textFieldDescription;
+    private javax.swing.JTextField textFieldId;
+    private javax.swing.JTextField textFieldTitle;
     // End of variables declaration//GEN-END:variables
 }

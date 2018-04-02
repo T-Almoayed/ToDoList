@@ -1,5 +1,1 @@
-sd    sdf    2018-03-15    Done    asdaweqq     
-sd    sdf    2018-03-15    Done    asdaweqq     
-sd    sdf    2018-03-15    Done    asdaweqq     
-sd    sdf    2018-03-15    Done    asdaweqq     
-sd    sdf    2018-03-15    Done    asdaweqq     
+1    Trip    2018-04-16    Undone    Go to archaeological sites     
